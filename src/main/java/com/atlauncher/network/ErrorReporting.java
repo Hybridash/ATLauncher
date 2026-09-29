@@ -36,7 +36,16 @@ public final class ErrorReporting {
     public static List<String> ignoredMessages = new ArrayList<>();
     public static boolean sentryInitialised = false;
 
+    /**
+     * Hybrid: crash reports from this fork must not be sent to ATLauncher's error tracker.
+     */
+    private static final boolean HYBRID_DISABLE_ERROR_REPORTING = true;
+
     public static void enable() {
+        if (HYBRID_DISABLE_ERROR_REPORTING) {
+            return;
+        }
+
         if (!sentryInitialised) {
             Sentry.init(options -> {
                 options.setDsn(Constants.SENTRY_DSN);

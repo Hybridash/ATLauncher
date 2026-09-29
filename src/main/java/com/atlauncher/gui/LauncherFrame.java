@@ -71,7 +71,7 @@ public final class LauncherFrame extends JFrame implements RelocalizationListene
         LogManager.info("*(Not Actually)");
 
         App.launcher.setParentFrame(this);
-        setTitle(Constants.LAUNCHER_NAME);
+        setTitle("Hybrid (unofficial " + Constants.LAUNCHER_NAME + " fork)");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setResizable(true);
         setLayout(new BorderLayout());

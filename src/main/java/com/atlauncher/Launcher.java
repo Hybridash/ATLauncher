@@ -160,7 +160,16 @@ public class Launcher {
         PerformanceManager.end();
     }
 
+    /**
+     * Hybrid: self-updates download official ATLauncher builds, which would replace this fork. Turned off.
+     */
+    private static final boolean HYBRID_DISABLE_SELF_UPDATE = true;
+
     public boolean launcherHasUpdate() {
+        if (HYBRID_DISABLE_SELF_UPDATE) {
+            return false;
+        }
+
         try (InputStreamReader fileReader = new InputStreamReader(
             Files.newInputStream(FileSystem.JSON.resolve("version.json")), StandardCharsets.UTF_8)) {
             this.latestLauncherVersion = Gsons.DEFAULT.fromJson(fileReader, LauncherVersion.class);
