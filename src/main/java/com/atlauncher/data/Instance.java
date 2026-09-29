@@ -139,6 +139,7 @@ import com.atlauncher.graphql.type.PackLogAction;
 import com.atlauncher.gui.dialogs.InstanceInstallerDialog;
 import com.atlauncher.gui.dialogs.ProgressDialog;
 import com.atlauncher.gui.dialogs.RenameInstanceDialog;
+import com.atlauncher.hybrid.HybridLaunchHooks;
 import com.atlauncher.managers.AccountManager;
 import com.atlauncher.managers.ConfigManager;
 import com.atlauncher.managers.CurseForgeUpdateManager;
@@ -955,6 +956,9 @@ public class Instance extends MinecraftVersion implements ModManagement {
                     }
                 }
 
+                // Hybrid: mod check, memory advice, world backups and shared keybinds/servers
+                HybridLaunchHooks.beforeLaunch(this);
+
                 Process process = MCLauncher.launch(account, this, nativesTempDir,
                     LWJGLManager.shouldUseLegacyLWJGL(this) ? lwjglNativesTempDir : null,
                     wrapperCommand, username);
@@ -990,6 +994,7 @@ public class Instance extends MinecraftVersion implements ModManagement {
                 String line;
                 int detectedError = 0;
                 boolean crashedWithoutKnownResolution = false;
+                StringBuilder hybridLog = new StringBuilder();
 
                 String replaceUUID = account.uuid.replace("-", "");
 
@@ -1034,6 +1039,8 @@ public class Instance extends MinecraftVersion implements ModManagement {
                     if (account.getAccessToken() != null) {
                         line = line.replaceAll(account.getAccessToken(), "**ACCESSTOKEN**");
                     }
+
+                    HybridLaunchHooks.recordLogLine(hybridLog, line);
 
                     if (line.contains("log4j:")) {
                         try {
@@ -1094,6 +1101,9 @@ public class Instance extends MinecraftVersion implements ModManagement {
                 if (detectedError != 0) {
                     MinecraftError.showInformationPopup(detectedError);
                 }
+
+                HybridLaunchHooks.afterExit(this, hybridLog, exitValue != 0 || crashedWithoutKnownResolution,
+                    detectedError != 0);
 
                 if (enableCommands && postExitCommand != null) {
                     if (!executeCommand(postExitCommand)) {

@@ -131,13 +131,21 @@ public class Settings {
 
     // Logging
     public boolean enableLogs = true;
-    public boolean enableAnalytics = true;
+    public boolean enableAnalytics = false; // Hybrid: off by default so this fork does not report to ATLauncher
     public String analyticsClientId = UUID.randomUUID().toString();
 
     // Backups
     public String backupsPath = null;
     public boolean enableAutomaticBackupAfterLaunch = false;
     public BackupMode backupMode = BackupMode.NORMAL;
+
+    // Hybrid features
+    public boolean hybridWorldBackups = true;
+    public int hybridWorldBackupsKeep = 5;
+    public boolean hybridCrashExplainer = true;
+    public boolean hybridModChecker = true;
+    public boolean hybridMemoryAdvice = true;
+    public boolean hybridSyncSharedConfig = false;
 
     // Commands
     public boolean enableCommands = false;

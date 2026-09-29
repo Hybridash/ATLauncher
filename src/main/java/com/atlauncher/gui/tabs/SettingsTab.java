@@ -34,6 +34,7 @@ import com.atlauncher.gui.tabs.settings.BackupsSettingsTab;
 import com.atlauncher.gui.tabs.settings.CommandsSettingsTab;
 import com.atlauncher.gui.tabs.settings.EnvironmentVariablesTab;
 import com.atlauncher.gui.tabs.settings.GeneralSettingsTab;
+import com.atlauncher.gui.tabs.settings.HybridSettingsTab;
 import com.atlauncher.gui.tabs.settings.JavaSettingsTab;
 import com.atlauncher.gui.tabs.settings.LoggingSettingsTab;
 import com.atlauncher.gui.tabs.settings.ModsSettingsTab;
@@ -76,6 +77,7 @@ public class SettingsTab extends HierarchyPanel implements Tab {
     private JavaSettingsTab javaSettingsTab;
     @Nullable
     private EnvironmentVariablesTab environmentVariablesTab;
+    private HybridSettingsTab hybridSettingsTab;
     @Nullable
     private NetworkSettingsTab networkSettingsTab;
     @Nullable
@@ -123,10 +125,11 @@ public class SettingsTab extends HierarchyPanel implements Tab {
         backupsSettingsTab = new BackupsSettingsTab(backupSettingsViewModel);
         commandSettingsTab = new CommandsSettingsTab(commandsSettingsViewModel);
         environmentVariablesTab = new EnvironmentVariablesTab(environmentVariablesViewModel);
+        hybridSettingsTab = new HybridSettingsTab();
         tabs = Arrays.asList(
                 new Tab[] { this.generalSettingsTab, this.modsSettingsTab, this.javaSettingsTab,
                         this.networkSettingsTab, this.loggingSettingsTab, this.backupsSettingsTab,
-                        this.commandSettingsTab, this.environmentVariablesTab });
+                        this.commandSettingsTab, this.environmentVariablesTab, this.hybridSettingsTab });
 
         for (Tab tab : this.tabs) {
             this.tabbedPane.addTab(tab.getTitle(), (JPanel) tab);
@@ -164,6 +167,7 @@ public class SettingsTab extends HierarchyPanel implements Tab {
         loggingSettingsTab = null;
         backupsSettingsTab = null;
         commandSettingsTab = null;
+        hybridSettingsTab = null;
         tabs = null;
     }
 

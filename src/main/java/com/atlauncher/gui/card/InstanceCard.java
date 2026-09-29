@@ -52,6 +52,7 @@ import com.atlauncher.gui.dialogs.EditModsDialog;
 import com.atlauncher.gui.dialogs.InstanceExportDialog;
 import com.atlauncher.gui.dialogs.InstanceSettingsDialog;
 import com.atlauncher.gui.dialogs.ProgressDialog;
+import com.atlauncher.hybrid.WorldRestoreDialog;
 import com.atlauncher.managers.AccountManager;
 import com.atlauncher.managers.ConfigManager;
 import com.atlauncher.managers.DialogManager;
@@ -103,6 +104,7 @@ public class InstanceCard extends CollapsiblePanel {
     private final JMenuItem normalBackupMenuItem = new JMenuItem(GetText.tr("Normal Backup"));
     private final JMenuItem normalPlusModsBackupMenuItem = new JMenuItem(GetText.tr("Normal + Mods Backup"));
     private final JMenuItem fullBackupMenuItem = new JMenuItem(GetText.tr("Full Backup"));
+    private final JMenuItem restoreWorldBackupMenuItem = new JMenuItem(GetText.tr("Restore World Backup..."));
     private final DropDownButton backupButton = new DropDownButton(GetText.tr("Backup"), backupPopupMenu);
 
     private final JPopupMenu getHelpPopupMenu = new JPopupMenu();
@@ -321,6 +323,11 @@ public class InstanceCard extends CollapsiblePanel {
 
         fullBackupMenuItem.addActionListener(e -> instance.backup(BackupMode.FULL));
         backupPopupMenu.add(fullBackupMenuItem);
+
+        // Hybrid: roll a world back to one of the automatic backups made on launch
+        backupPopupMenu.addSeparator();
+        restoreWorldBackupMenuItem.addActionListener(e -> WorldRestoreDialog.show(instance));
+        backupPopupMenu.add(restoreWorldBackupMenuItem);
 
         setupEditInstanceButton();
     }
@@ -720,6 +727,7 @@ public class InstanceCard extends CollapsiblePanel {
         this.normalBackupMenuItem.setText(GetText.tr("Normal Backup"));
         this.normalPlusModsBackupMenuItem.setText(GetText.tr("Normal + Mods Backup"));
         this.fullBackupMenuItem.setText(GetText.tr("Full Backup"));
+        this.restoreWorldBackupMenuItem.setText(GetText.tr("Restore World Backup..."));
         this.backupButton.setText(GetText.tr("Backup"));
 
         this.discordLinkMenuItem.setText(GetText.tr("Discord"));
